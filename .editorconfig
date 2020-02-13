@@ -2,3 +2,9 @@
 
 # SA1200: Using directives should be placed correctly
 dotnet_diagnostic.SA1200.severity = none
+
+# SA1124: Do not use regions
+dotnet_diagnostic.SA1124.severity = silent
+
+# SA1401: Fields should be private
+dotnet_diagnostic.SA1401.severity = silent
