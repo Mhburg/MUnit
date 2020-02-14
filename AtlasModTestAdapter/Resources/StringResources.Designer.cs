@@ -61,6 +61,15 @@ namespace AtlasModTestAdapter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Socket Error: {0}.
+        /// </summary>
+        public static string SocketError {
+            get {
+                return ResourceManager.GetString("SocketError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} operation to App is time-out..
         /// </summary>
         public static string TimeoutFormattableString {

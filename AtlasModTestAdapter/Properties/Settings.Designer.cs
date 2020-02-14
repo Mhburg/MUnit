@@ -43,10 +43,37 @@ namespace AtlasModTestAdapter.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
-        public int TimesToRetry {
+        [global::System.Configuration.DefaultSettingValueAttribute("TestTransporter")]
+        public string TestTransporterClass {
             get {
-                return ((int)(this["TimesToRetry"]));
+                return ((string)(this["TestTransporterClass"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AtlasMod.TestAdapter")]
+        public string AssemblyName {
+            get {
+                return ((string)(this["AssemblyName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60000")]
+        public int SendReceiveTimeout {
+            get {
+                return ((int)(this["SendReceiveTimeout"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int ConnectionTimeout {
+            get {
+                return ((int)(this["ConnectionTimeout"]));
             }
         }
     }

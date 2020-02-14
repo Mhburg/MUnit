@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Net;
+using System.Net.Sockets;
 
 namespace AtlasModTestAdapter.Resources
 {
@@ -38,7 +39,7 @@ namespace AtlasModTestAdapter.Resources
         }
 
         /// <summary>
-        /// Gets port used for connecting to RimWorld.
+        /// Gets port used for connecting to remote test engine.
         /// </summary>
         public static int RemotePort
         {
@@ -71,7 +72,7 @@ namespace AtlasModTestAdapter.Resources
         }
 
         /// <summary>
-        /// Gets endpoint for listening to incoming traffic.
+        /// Gets endpoint for sending traffic. It uses local host address and remote port set in app.config.
         /// </summary>
         public static IPEndPoint RemoteEndPoint
         {
@@ -85,6 +86,14 @@ namespace AtlasModTestAdapter.Resources
 
                 return remoteEndPoint;
             }
+        }
+
+        /// <summary>
+        /// Gets address family used by local host.
+        /// </summary>
+        public static AddressFamily MachineAddressFamily
+        {
+            get => Dns.GetHostAddresses(Dns.GetHostName())[0].AddressFamily;
         }
     }
 }
