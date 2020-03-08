@@ -15,6 +15,31 @@ namespace MUnit.Transport
     public interface IMUnitClient
     {
         /// <summary>
+        /// Raised when a test starts.
+        /// </summary>
+        event Action<TestResult> RecordTestStartEvent;
+
+        /// <summary>
+        /// Raised when a test is ended.
+        /// </summary>
+        event Action<TestResult> RecordTestEndEvent;
+
+        /// <summary>
+        /// Rasied when a test resutl is reported.
+        /// </summary>
+        event Action<TestResult> RecordTestResultEvent;
+
+        /// <summary>
+        /// Raised when server sends back discovered tests.
+        /// </summary>
+        event Action<int, ICollection<ITestMethodContext>> DiscoverTestsEvent;
+
+        /// <summary>
+        /// Check assmbly hash with server.
+        /// </summary>
+        event Action<int, byte[]> CheckAssemblyHashEvent;
+
+        /// <summary>
         /// Start the client.
         /// </summary>
         void Start();

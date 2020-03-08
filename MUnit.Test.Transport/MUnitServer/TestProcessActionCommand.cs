@@ -154,41 +154,41 @@ namespace MUnit.Test.Transport.TestMUnitServer
                 new string[] { "InitializeOnSimpleMethod", "SimpleTestMethod1", "CleanupOnSimpleMethod" }
             };
 
-            yield return new object[]
-            {
-                new WireMessage(
-                    WireMessageTypes.Request,
-                    CommandType.RunTests,
-                    new Guid[]
-                    {
-                        HashUtilities.GuidForTestCycleID(AssemblyPrep.Source, typeof(SimpleTestMethodCycle).FullName + "." + "SimpleTestMethod1"),
-                        HashUtilities.GuidForTestCycleID(AssemblyPrep.Source, typeof(SimpleTestMethodCycle).FullName + "." + "SimpleTestMethod2"),
-                    }),
-                new string[]
-                {
-                    "InitializeOnSimpleMethod", "SimpleTestMethod1", "CleanupOnSimpleMethod",
-                    "InitializeOnSimpleMethod", "SimpleTestMethod2", "CleanupOnSimpleMethod",
-                }
-            };
+            //yield return new object[]
+            //{
+            //    new WireMessage(
+            //        WireMessageTypes.Request,
+            //        CommandType.RunTests,
+            //        new Guid[]
+            //        {
+            //            HashUtilities.GuidForTestCycleID(AssemblyPrep.Source, typeof(SimpleTestMethodCycle).FullName + "." + "SimpleTestMethod1"),
+            //            HashUtilities.GuidForTestCycleID(AssemblyPrep.Source, typeof(SimpleTestMethodCycle).FullName + "." + "SimpleTestMethod2"),
+            //        }),
+            //    new string[]
+            //    {
+            //        "InitializeOnSimpleMethod", "SimpleTestMethod1", "CleanupOnSimpleMethod",
+            //        "InitializeOnSimpleMethod", "SimpleTestMethod2", "CleanupOnSimpleMethod",
+            //    }
+            //};
 
-            yield return new object[]
-            {
-                new WireMessage(
-                    WireMessageTypes.Request,
-                    CommandType.RunTests,
-                    new Guid[]
-                    {
-                        HashUtilities.GuidForTestCycleID(AssemblyPrep.Source, typeof(LongRunningTestClass).FullName + "." + "LongRunningTest1"),
-                        HashUtilities.GuidForTestCycleID(AssemblyPrep.Source, typeof(LongRunningTestClass).FullName + "." + "LongRunningTest2"),
-                        HashUtilities.GuidForTestCycleID(AssemblyPrep.Source, typeof(LongRunningTestClass).FullName + "." + "LongRunningTest3"),
-                    }),
-                new string[]
-                { 
-                    "Entering LongRunningTest1...", "Leaving LongRunningTest1...",
-                    "Entering LongRunningTest2...", "Leaving LongRunningTest2...",
-                    "Entering LongRunningTest3...", "Leaving LongRunningTest3...",
-                }
-            };
+            //yield return new object[]
+            //{
+            //    new WireMessage(
+            //        WireMessageTypes.Request,
+            //        CommandType.RunTests,
+            //        new Guid[]
+            //        {
+            //            HashUtilities.GuidForTestCycleID(AssemblyPrep.Source, typeof(LongRunningTestClass).FullName + "." + "LongRunningTest1"),
+            //            HashUtilities.GuidForTestCycleID(AssemblyPrep.Source, typeof(LongRunningTestClass).FullName + "." + "LongRunningTest2"),
+            //            HashUtilities.GuidForTestCycleID(AssemblyPrep.Source, typeof(LongRunningTestClass).FullName + "." + "LongRunningTest3"),
+            //        }),
+            //    new string[]
+            //    { 
+            //        "Entering LongRunningTest1...", "Leaving LongRunningTest1...",
+            //        "Entering LongRunningTest2...", "Leaving LongRunningTest2...",
+            //        "Entering LongRunningTest3...", "Leaving LongRunningTest3...",
+            //    }
+            //};
 
             yield return new object[]
             {

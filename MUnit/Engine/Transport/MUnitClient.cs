@@ -42,27 +42,27 @@ namespace MUnit.Transport
         /// <summary>
         /// Raised when a test starts.
         /// </summary>
-        protected event Action<TestResult> RecordTestStartEvent;
+        public event Action<TestResult> RecordTestStartEvent;
 
         /// <summary>
-        /// Raised when a test is ended.
+        /// Raised when a test is ended. Server raises this event before <see cref="RecordTestResultEvent"/>.
         /// </summary>
-        protected event Action<TestResult> RecordTestEndEvent;
+        public event Action<TestResult> RecordTestEndEvent;
 
         /// <summary>
         /// Rasied when a test resutl is reported.
         /// </summary>
-        protected event Action<TestResult> RecordTestResultEvent;
+        public event Action<TestResult> RecordTestResultEvent;
 
         /// <summary>
         /// Raised when server sends back discovered tests.
         /// </summary>
-        protected event Action<int, ICollection<ITestMethodContext>> DiscoverTestsEvent;
+        public event Action<int, ICollection<ITestMethodContext>> DiscoverTestsEvent;
 
         /// <summary>
         /// Check assmbly hash with server.
         /// </summary>
-        protected event Action<int, byte[]> CheckAssemblyHashEvent;
+        public event Action<int, byte[]> CheckAssemblyHashEvent;
 
         /// <summary>
         /// Start a background thread to receive and process incoming messages.
