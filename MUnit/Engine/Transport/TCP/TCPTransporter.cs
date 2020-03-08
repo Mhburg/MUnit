@@ -216,7 +216,7 @@ namespace MUnit.Transport
 
             if (!_disposed && handler.Available > 0)
             {
-                byte[] buffer = new byte[10240];
+                byte[] buffer = new byte[TCPConstants.TCPBufferSize];
                 int byteRead = handler.Receive(
                     buffer,
                     0,
@@ -285,43 +285,15 @@ namespace MUnit.Transport
         /// </summary>
         protected class StateObject : IDisposable
         {
-            private const int _bufferSize = 10240;
-
             /// <summary>
-            /// Gets or sets buffer used in <see cref="System.Net.Sockets.Socket"/>'s receive methods.
-            /// </summary>
-            public byte[] Buffer { get; set; } = new byte[_bufferSize];
-
-            /// <summary>
-            /// Gets or sets starting position when <see cref="StateObject.Buffer"/> is read.
+            /// Gets or sets starting position when <see cref="StateObject.Stream"/> is read.
             /// </summary>
             /// <remarks> It will be moved X index forward when X number of bytes are processed. </remarks>
             public int StartReadPos { get; set; } = 0;
 
-            /// <summary>
-            /// Gets or sets the total of bytes read for the current <see cref="StateObject.Buffer"/>.
-            /// </summary>
-            public int ByteRead { get; set; } = 0;
-
-            /// <summary>
-            /// Gets number of bytes unprocessed in <see cref="StateObject.Buffer"/>.
-            /// </summary>
-            public int UnProcessedBytes { get => this.ByteRead - this.StartReadPos; }
-
-            public Socket Handler { get; set; }
-
             public MemoryStream Stream { get; set; } = new MemoryStream();
 
             public ManualResetEvent ResetEvent { get; set; } = new ManualResetEvent(false);
-
-            public void NewBuffer(int startPos, int byteRead)
-            {
-                byte[] leftover = this.Buffer.Skip(startPos).Take(byteRead - startPos).ToArray();
-                this.Buffer = new byte[_bufferSize];
-                leftover.CopyTo(this.Buffer, 0);
-                this.ByteRead = leftover.Length;
-                this.StartReadPos = 0;
-            }
 
             public void Dispose()
             {

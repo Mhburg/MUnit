@@ -22,6 +22,11 @@ namespace MUnit.Transport
         private static IPEndPoint _serverEndPoint;
 
         /// <summary>
+        /// Gets or sets buffer size for TCP connection.
+        /// </summary>
+        public static int TCPBufferSize { get; set; } = 10240;
+
+        /// <summary>
         /// Gets endpoint for listening to incoming traffic.
         /// </summary>
         public static IPEndPoint ServerEndPoint
