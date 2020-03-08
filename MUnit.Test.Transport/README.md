@@ -1,0 +1,2 @@
+﻿If all tests in this project are selected and run, it will encounter a socket exception where multiple attempts are made to bind
+to the same port. This is due to an open issue in MSTest V2: https://github.com/microsoft/testfx/issues/580

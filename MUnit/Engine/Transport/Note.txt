@@ -1,0 +1,2 @@
+﻿CaptureContext Reference:
+https://referencesource.microsoft.com/#System/net/System/Net/_ContextAwareResult.cs,b5a5aefaa240ffa1,references

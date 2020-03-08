@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <TestAdaptersPaths>D:\Modding\MUnit\AtlasModTestAdapter\bin\UnitTest\net461;D:\Modding\MUnit</TestAdaptersPaths>
+  </RunConfiguration>
+</RunSettings>
