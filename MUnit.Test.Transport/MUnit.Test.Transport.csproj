@@ -87,7 +87,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AtlasModTestCore\MUnit.csproj">
+    <ProjectReference Include="..\MUnit\MUnit.csproj">
       <Project>{405e9e97-0a4f-4adf-9f37-3b6d09b4693f}</Project>
       <Name>MUnit</Name>
     </ProjectReference>

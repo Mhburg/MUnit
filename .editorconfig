@@ -8,3 +8,12 @@ dotnet_diagnostic.SA1124.severity = silent
 
 # SA1401: Fields should be private
 dotnet_diagnostic.SA1401.severity = silent
+
+# IDE0011: Add braces
+csharp_prefer_braces = when_multiline:silent
+
+# SA1503: Braces should not be omitted
+dotnet_diagnostic.SA1503.severity = none
+
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none

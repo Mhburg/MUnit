@@ -70,7 +70,7 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AtlasModTestCore\MUnit.csproj" />
+    <ProjectReference Include="..\MUnit\MUnit.csproj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\StringResources.resx">

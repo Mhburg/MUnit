@@ -22,7 +22,7 @@ namespace MUnitTestAdapter
     [ExtensionUri(MUnitTAConstants.ExecutorUri)]
     public class MUnitTestExecutor : ITestExecutor
     {
-        private readonly IMUnitClient _client;
+        private readonly MUnitClient _client;
         private IFrameworkHandle _frameworkHandle;
         private ICollection<Guid> _runningTests;
 
@@ -82,7 +82,7 @@ namespace MUnitTestAdapter
         private void RunTestsInternal(ICollection<Guid> tests, IFrameworkHandle frameworkHandle)
         {
             _frameworkHandle = frameworkHandle;
-            _client.RunTests(_runningTests, out uint testRunID);
+            _client.RunTests(_runningTests, out int testRunID);
 
             _client.RecordTestStartEvent += this.RecordTestStartEventHandler;
             _client.RecordTestEndEvent += this.RecordTestEndEventHandler;

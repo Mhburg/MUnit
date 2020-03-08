@@ -6,20 +6,20 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FC653243-4EC8-4E50-A315-196230564012}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		AtlasModTestAdapter\stylecop.json = AtlasModTestAdapter\stylecop.json
+		MUnitTestAdapterForVS\stylecop.json = MUnitTestAdapterForVS\stylecop.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{96605076-1211-4260-9CA0-3F572475A391}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{BF6AAB7C-4892-4E59-B39C-9D4755089228}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUnitTestAdapterForVS", "AtlasModTestAdapter\MUnitTestAdapterForVS.csproj", "{575D0F9E-FBCA-45E0-84A0-2D45483A6484}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUnitTestAdapterForVS", "MUnitTestAdapterForVS\MUnitTestAdapterForVS.csproj", "{575D0F9E-FBCA-45E0-84A0-2D45483A6484}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcpServer", "TcpServer\TcpServer.csproj", "{00645EEA-420A-402C-8843-744D1D6E9879}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcpClient", "TcpClient\TcpClient.csproj", "{286DF022-23D4-4FAE-BC83-BE9746EB14A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUnit", "AtlasModTestCore\MUnit.csproj", "{405E9E97-0A4F-4ADF-9F37-3B6D09B4693F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUnit", "MUnit\MUnit.csproj", "{405E9E97-0A4F-4ADF-9F37-3B6D09B4693F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{560AC728-012F-4A10-B50D-BFF3D7828BE4}"
 EndProject

@@ -192,56 +192,45 @@ namespace MUnit.Transport
             if (_stateObject == null)
                 _stateObject = new StateObject();
 
-            if (_stateObject.UnProcessedBytes > _eof.Length)
+            if (_stateObject.Stream.Length > _eof.Length)
             {
-                if (this.IsEOF(_stateObject.Buffer, _stateObject.StartReadPos, _stateObject.UnProcessedBytes, out int index))
+                byte[] buffer = _stateObject.Stream.ToArray();
+                if (this.IsEOF(buffer, _stateObject.StartReadPos, buffer.Length, out int index))
                 {
-                    _stateObject.Stream.Write(_stateObject.Buffer, _stateObject.StartReadPos, index + 1 - _stateObject.StartReadPos);
-                    _stateObject.Stream.Position = 0;
-                    _stateObject.StartReadPos = index + _eof.Length + 1;
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        stream.Write(buffer, 0, index + 1);
+                        stream.Position = 0;
+                        WireMessage wireMessage = SerializeHelper.BinaryRead<WireMessage>(stream);
+                        this.MessageQueue.Enqueue(wireMessage);
+                    }
 
-                    WireMessage wireMessage = SerializeHelper.BinaryRead<WireMessage>(_stateObject.Stream);
-                    this.MessageQueue.Enqueue(wireMessage);
-
-                    _stateObject.Reset();
+                    _stateObject.ResetStream(buffer, index + _eof.Length + 1);
                     return;
                 }
                 else
                 {
-                    _stateObject.Stream.Write(_stateObject.Buffer, _stateObject.StartReadPos, _stateObject.UnProcessedBytes);
-                    _stateObject.StartReadPos = _stateObject.ByteRead;
-
-                    if (!(_stateObject.ByteRead < _stateObject.Buffer.Length * 0.75))
-                    {
-                        Debug.Assert(_stateObject.Buffer.Length * 0.25 > _eof.Length, "Available buffer size is smaller than the size of EOF markgin.");
-                        _stateObject.NewBuffer(_stateObject.StartReadPos, _stateObject.ByteRead);
-                    }
+                    _stateObject.StartReadPos = buffer.Length;
                 }
             }
-            else
+
+            if (!_disposed && handler.Available > 0)
             {
-                while (!_disposed && handler.Available > 0)
-                {
-                    int byteRead = handler.Receive(
-                        _stateObject.Buffer,
-                        _stateObject.ByteRead,
-                        _stateObject.Buffer.Length - _stateObject.ByteRead,
-                        SocketFlags.None,
-                        out SocketError socketError);
+                byte[] buffer = new byte[10240];
+                int byteRead = handler.Receive(
+                    buffer,
+                    0,
+                    buffer.Length,
+                    SocketFlags.None,
+                    out SocketError socketError);
+                _stateObject.Stream.Write(buffer, 0, byteRead);
 
-                    if (socketError != SocketError.Success)
-                        throw new SocketException((int)socketError);
-
-                    _stateObject.ByteRead += byteRead;
-                    Debug.Assert(!(_stateObject.ByteRead > _stateObject.Buffer.Length), "ByteRead is greater than buffer size.");
-
-                    if (_stateObject.ByteRead == _stateObject.Buffer.Length)
-                        break;
-                }
-
-                if (!handler.Connected)
-                    throw new SocketException((int)SocketError.NotConnected);
+                if (socketError != SocketError.Success)
+                    throw new SocketException((int)socketError);
             }
+
+            if (!handler.Connected)
+                throw new SocketException((int)SocketError.NotConnected);
         }
 
         /// <summary>
@@ -340,10 +329,12 @@ namespace MUnit.Transport
                 this.Stream.Dispose();
             }
 
-            public void Reset()
+            internal void ResetStream(byte[] buffer, int offset)
             {
-                Stream.Dispose();
-                Stream = new MemoryStream();
+                this.Stream.Dispose();
+                this.Stream = new MemoryStream();
+                this.Stream.Write(buffer, offset, buffer.Length - offset);
+                this.StartReadPos = 0;
             }
         }
     }

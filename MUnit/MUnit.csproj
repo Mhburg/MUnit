@@ -71,7 +71,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\AtlasModTestAdapter\stylecop.json">
+    <AdditionalFiles Include="..\MUnitTestAdapterForVS\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
   </ItemGroup>
