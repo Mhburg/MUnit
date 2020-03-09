@@ -35,7 +35,7 @@ namespace MUnitTestAdapter
         private SynchronizedCollection<Guid> _testResultTrackList;
         private AutoResetEvent _testResultReceivedEvent = new AutoResetEvent(false);
 
-        private MUnitClient Client => TypeResolver.MUnitClient;
+        private static MUnitClient Client => TypeResolver.MUnitClient;
 
         #region ITestExecutor Implementation
 
@@ -44,7 +44,7 @@ namespace MUnitTestAdapter
         /// </summary>
         public void Cancel()
         {
-            this.Client.CancelTestRun();
+            Client.CancelTestRun();
         }
 
         /// <summary>

@@ -86,6 +86,7 @@ namespace MUnit.Transport
                         }
                         catch (Exception e)
                         {
+                            _isReceiving = false;
                             _logger.RecordMessage(MessageLevel.Error, e.ToString());
                         }
                     }, null);
