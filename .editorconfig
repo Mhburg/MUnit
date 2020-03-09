@@ -7,7 +7,7 @@ dotnet_diagnostic.SA1200.severity = none
 dotnet_diagnostic.SA1124.severity = silent
 
 # SA1401: Fields should be private
-dotnet_diagnostic.SA1401.severity = silent
+dotnet_diagnostic.SA1401.severity = none
 
 # IDE0011: Add braces
 csharp_prefer_braces = when_multiline:silent
@@ -32,3 +32,6 @@ dotnet_diagnostic.CA1710.severity = none
 
 # CA1043: Use Integral Or String Argument For Indexers
 dotnet_diagnostic.CA1043.severity = none
+
+# CA1051: Do not declare visible instance fields
+dotnet_diagnostic.CA1051.severity = none

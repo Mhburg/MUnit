@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ClientAssembly" xml:space="preserve">
+    <value>0MUnit.dll</value>
+  </data>
+  <data name="ClientType" xml:space="preserve">
+    <value>MUnit.Transport.TCPClient</value>
+  </data>
   <data name="LoggerAssembly" xml:space="preserve">
     <value>0MUnit.dll</value>
   </data>
@@ -139,11 +145,5 @@
   </data>
   <data name="SettingFile" xml:space="preserve">
     <value>MUnit.config</value>
-  </data>
-  <data name="TransporterAssembly" xml:space="preserve">
-    <value>0MUnit.dll</value>
-  </data>
-  <data name="TransporterType" xml:space="preserve">
-    <value>MUnit.Transport.TCPClient</value>
   </data>
 </root>

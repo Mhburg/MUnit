@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -99,8 +100,10 @@ namespace MUnit.Transport
 
             try
             {
-                this.Send(new WireMessage(
-                    WireMessageTypes.Reply, CommandType.TakeResults, testResults), testResults.First().TestRunID);
+                this.Send(
+                    new WireMessage(
+                        WireMessageTypes.Reply, CommandType.TakeResults, testResults),
+                    testResults.First().TestRunID);
             }
             catch (Exception e)
             {
@@ -117,12 +120,14 @@ namespace MUnit.Transport
         public virtual void SendTestStats(TestResult result, CommandType commandType)
         {
             ThrowUtilities.NullArgument(result, nameof(result));
-            Debug.Assert(commandType == CommandType.RecordTestStart || commandType == CommandType.RecordTestEnd, "Input command type is not supported.");
+            Trace.Assert(commandType == CommandType.RecordTestStart || commandType == CommandType.RecordTestEnd, "Input command type is not supported.");
 
             try
             {
-                this.Send(new WireMessage(
-                    WireMessageTypes.Telemetry, commandType, result), result.TestRunID);
+                this.Send(
+                    new WireMessage(
+                        WireMessageTypes.Telemetry, commandType, result),
+                    result.TestRunID);
             }
             catch (Exception e)
             {

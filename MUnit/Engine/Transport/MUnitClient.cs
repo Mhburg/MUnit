@@ -71,22 +71,25 @@ namespace MUnit.Transport
         {
             base.Start();
 
-            _isReceiving = true;
-            ThreadPool.UnsafeQueueUserWorkItem(
-                (object state) =>
-                {
-                    try
+            if (!_isReceiving)
+            {
+                _isReceiving = true;
+                ThreadPool.UnsafeQueueUserWorkItem(
+                    (object state) =>
                     {
-                        while (_isReceiving)
+                        try
                         {
-                            this.ProcessMessagePacket(this.Receive());
+                            while (_isReceiving)
+                            {
+                                this.ProcessMessagePacket(this.Receive());
+                            }
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        _logger.RecordMessage(MessageLevel.Error, e.ToString());
-                    }
-                }, null);
+                        catch (Exception e)
+                        {
+                            _logger.RecordMessage(MessageLevel.Error, e.ToString());
+                        }
+                    }, null);
+            }
         }
 
         /// <inheritdoc/>

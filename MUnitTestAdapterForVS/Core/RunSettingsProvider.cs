@@ -30,6 +30,13 @@ namespace MUnitTestAdapter
     public class RunSettingsProvider : ISettingsProvider
     {
         /// <summary>
+        /// Gets or sets action to take before sending tests to remote host.
+        /// </summary>
+        public static IOnTestSend OnTestSendAction { get; set; }
+
+        private static string OnTestSendAssembly { get; set; }
+
+        /// <summary>
         /// Load settings from xml file.
         /// </summary>
         /// <param name="reader"> XmlReader with loaded xml file ready for reading. </param>
@@ -37,15 +44,13 @@ namespace MUnitTestAdapter
         {
             ValidateArg.NotNull(reader, nameof(reader));
 
-#if DEBUG
-            DebugSetup(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "RunSettings.log.txt"), out TextWriterTraceListener listener);
-#endif
-            while (reader.MoveToContent() != XmlNodeType.None)
+            while (reader.Read())
             {
                 Debug.WriteLine("Name: {0}, Value : {1}", reader.Name, reader.Value);
                 switch (reader.Name)
                 {
                     case nameof(MUnitConfiguration.ServerIP):
+                        reader.Read();
                         MUnitConfiguration.ServerIP = new IPAddress(
                             reader.ReadContentAsString()
                                   .Split('.')
@@ -53,28 +58,38 @@ namespace MUnitTestAdapter
                                   .ToArray());
                         break;
                     case nameof(MUnitConfiguration.ServerPort):
+                        reader.Read();
                         MUnitConfiguration.ServerPort = reader.ReadContentAsInt();
                         break;
                     case nameof(MUnitConfiguration.SendTimeout):
+                        reader.Read();
                         MUnitConfiguration.SendTimeout = reader.ReadContentAsInt();
                         break;
                     case nameof(MUnitConfiguration.ReceiveTimeout):
+                        reader.Read();
                         MUnitConfiguration.ReceiveTimeout = reader.ReadContentAsInt();
+                        break;
+                    case nameof(OnTestSendAssembly):
+                        reader.Read();
+                        OnTestSendAssembly = reader.ReadContentAsString();
+                        OnTestSendAction = this.LoadOnTestSendAction(OnTestSendAssembly);
                         break;
                 }
             }
-
-#if DEBUG
-            listener.Dispose();
-#endif
         }
 
-#if DEBUG
-        private void DebugSetup(string fileName, out TextWriterTraceListener listener)
+        private IOnTestSend LoadOnTestSendAction(string onTestSendAssembly)
         {
-            listener = new TextWriterTraceListener(fileName);
-            Debug.Listeners.Add(listener);
+            Assembly assembly = Assembly.LoadFrom(onTestSendAssembly);
+            foreach (Type type in assembly.GetTypes())
+            {
+                if (typeof(IOnTestSend).IsAssignableFrom(type))
+                {
+                    return (IOnTestSend)Activator.CreateInstance(type);
+                }
+            }
+
+            return null;
         }
-#endif
     }
 }

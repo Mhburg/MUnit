@@ -19,6 +19,11 @@ namespace MUnit.Transport
         IConcurrentQueue<WireMessage> MessageQueue { get; }
 
         /// <summary>
+        /// Gets a value indicating whether is connected.
+        /// </summary>
+        bool Connected { get; }
+
+        /// <summary>
         /// Initialize the transporter.
         /// </summary>
         void Start();

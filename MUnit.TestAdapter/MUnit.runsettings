@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
-  <RunConfiguration>
-    <TestAdaptersPaths>D:\Modding\MUnit\MUnitTestAdapterForVS\bin\UnitTest\net461</TestAdaptersPaths>
-  </RunConfiguration>
+    <RunConfiguration>
+        <TestAdaptersPaths>D:\Modding\MUnit\MUnitTestAdapterForVS\bin\UnitTest\net461</TestAdaptersPaths>
+    </RunConfiguration>
+    <MUnitAdpater>
+        <ServerIP>192.168.0.1</ServerIP>
+        <ServerPort>10000</ServerPort>
+        <SendTimeout>10000</SendTimeout>
+        <ReceiveTimeout>10000</ReceiveTimeout>
+    </MUnitAdpater>
 </RunSettings>

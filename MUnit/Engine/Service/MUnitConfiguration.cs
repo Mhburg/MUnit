@@ -63,8 +63,8 @@ namespace MUnit.Engine.Service
             MUnitConfiguration.ServerIP = new IPAddress(
                 configuration.AppSettings.Settings[nameof(MUnitConfiguration.ServerIP)]
                     .Value.Split('.').Select(s => byte.Parse(s, CultureInfo.InvariantCulture)).ToArray());
-            MUnitConfiguration.TransporterAssembly = configuration.AppSettings.Settings[nameof(Settings.TransporterAssembly)].Value;
-            MUnitConfiguration.TransporterType = configuration.AppSettings.Settings[nameof(Settings.TransporterType)].Value;
+            MUnitConfiguration.ClientAssembly = configuration.AppSettings.Settings[nameof(Settings.ClientAssembly)].Value;
+            MUnitConfiguration.ClientType = configuration.AppSettings.Settings[nameof(Settings.ClientType)].Value;
             MUnitConfiguration.LoggerAssembly = configuration.AppSettings.Settings[nameof(Settings.LoggerAssembly)].Value;
             MUnitConfiguration.LoggerType = configuration.AppSettings.Settings[nameof(Settings.LoggerType)].Value;
             MUnitConfiguration.LoggerLevel = configuration.AppSettings.Settings[nameof(Settings.LoggerLevel)].Value;
@@ -91,14 +91,14 @@ namespace MUnit.Engine.Service
         public static int ReceiveTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets assembly that contains the transporter.
+        /// Gets or sets assembly that contains the client.
         /// </summary>
-        public static string TransporterAssembly { get; set; }
+        public static string ClientAssembly { get; set; }
 
         /// <summary>
-        /// Gets or sets type of transporter.
+        /// Gets or sets type of Client.
         /// </summary>
-        public static string TransporterType { get; set; }
+        public static string ClientType { get; set; }
 
         /// <summary>
         /// Gets or sets assembly that contains a logger type.

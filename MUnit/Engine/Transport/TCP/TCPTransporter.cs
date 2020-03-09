@@ -69,6 +69,9 @@ namespace MUnit.Transport
         /// </summary>
         public IConcurrentQueue<WireMessage> MessageQueue { get; set; } = PlatformService.GetServiceManager().GetConcurrentQueue<WireMessage>();
 
+        /// <inheritdoc/>
+        public bool Connected => _handler.Connected;
+
         /// <summary>
         /// Connect to <paramref name="endPoint"/>.
         /// </summary>

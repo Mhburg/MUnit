@@ -40,6 +40,11 @@ namespace MUnit.Transport
         event Action<int, byte[]> CheckAssemblyHashEvent;
 
         /// <summary>
+        /// Gets a value indicating whether client is connected.
+        /// </summary>
+        bool Connected { get; }
+
+        /// <summary>
         /// Start the client.
         /// </summary>
         void Start();

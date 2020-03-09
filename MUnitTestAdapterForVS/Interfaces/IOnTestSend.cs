@@ -3,12 +3,6 @@
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MUnit;
 using MUnit.Transport;
 
 namespace MUnitTestAdapter
@@ -19,7 +13,13 @@ namespace MUnitTestAdapter
     public interface IOnTestSend
     {
         /// <summary>
-        /// Action to take on tests being sent to <see cref="MUnit.Engine.ITestEngine"/>.
+        /// Gets or sets milliseconed elasped after taking OnTestSend action but before sending tests to <see cref="MUnit.Engine.ITestEngine"/>.
+        /// -1 to wait indefinitely.
+        /// </summary>
+        int ReconnectDelay { get; set; }
+
+        /// <summary>
+        /// Action to take before tests are sent to <see cref="MUnit.Engine.ITestEngine"/>.
         /// </summary>
         /// <param name="client"> Used for communicating with remote test engine. </param>
         void OnTestSend(IMUnitClient client);

@@ -3,11 +3,28 @@
     <AssemblyName>MUnitForVS.TestAdapter</AssemblyName>
     <TargetFramework>net461</TargetFramework>
     <AssemblyTitle>AtlasModTestAdapter</AssemblyTitle>
-    <Product>AtlasModTestAdapter</Product>
-    <Copyright>Copyright ©  2020</Copyright>
+    <Product>MUnit TestAdapter For Visual Studio</Product>
+    <Copyright>Copyright ©  2020 Zizhen Li</Copyright>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <RootNamespace>MUnitTestAdapter</RootNamespace>
     <Configurations>Debug;Release;UnitTest</Configurations>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Authors>Zizhen Li</Authors>
+    <Description>An adpater of MUnit for using with Visual Studio IDE</Description>
+    <PackageProjectUrl>https://github.com/Mhburg/MUnit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Mhburg/MUnit</RepositoryUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>UnitTest Mod TCP IPC</PackageTags>
+    <PackageReleaseNotes>* Add support for making remote procedure call before running tests.</PackageReleaseNotes>
+    <NeutralLanguage>en</NeutralLanguage>
+    <AssemblyVersion>0.9.0.0</AssemblyVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.0.4</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>portable</DebugType>
@@ -23,9 +40,14 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
+    <DocumentationFile>bin\Release\MUnitForVS.TestAdapter.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="app.config" />
+    <None Include="..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">

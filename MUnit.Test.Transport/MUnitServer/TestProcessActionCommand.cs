@@ -29,7 +29,7 @@ namespace MUnit.Test.Transport.TestMUnitServer
         {
             MUnitEngine engine = new MUnitEngine(new MUnitLogger(Framework.MessageLevel.Debug));
             engine.DiscoverTests(new string[] { Path.GetFileName(Assembly.GetExecutingAssembly().Location) });
-            _tcpServer = new TCPServer(engine, engine.Logger);
+            _tcpServer = new TCPServer(engine);
 
             engine = new MUnitEngine(new MUnitLogger(Framework.MessageLevel.Debug));
             engine.DiscoverTests(new string[] { Path.GetFileName(Assembly.GetExecutingAssembly().Location) });

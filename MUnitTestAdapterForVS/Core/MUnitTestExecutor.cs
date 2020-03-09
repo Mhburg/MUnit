@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using MUnit.Engine.Service;
 using MUnit.Transport;
 using MUnitTestAdapter.Resources;
@@ -19,6 +20,7 @@ namespace MUnitTestAdapter
 {
     using Microsoft.VisualStudio.TestPlatform.ObjectModel;
     using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
+    using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 
     /// <summary>
     /// <para>ITestExecutor implementation which is called by vs test framework or the IDE.</para>
@@ -28,19 +30,12 @@ namespace MUnitTestAdapter
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "Dispose() is not called by caller.")]
     public class MUnitTestExecutor : ITestExecutor
     {
-        private readonly IMUnitClient _client;
         private IFrameworkHandle _frameworkHandle;
         private SynchronizedCollection<Guid> _testEndTrackList;
         private SynchronizedCollection<Guid> _testResultTrackList;
         private AutoResetEvent _testResultReceivedEvent = new AutoResetEvent(false);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MUnitTestExecutor"/> class.
-        /// </summary>
-        public MUnitTestExecutor()
-        {
-            _client = TypeResolver.MUnitClient;
-        }
+        private MUnitClient Client => TypeResolver.MUnitClient;
 
         #region ITestExecutor Implementation
 
@@ -49,7 +44,7 @@ namespace MUnitTestAdapter
         /// </summary>
         public void Cancel()
         {
-            this._client.CancelTestRun();
+            this.Client.CancelTestRun();
         }
 
         /// <summary>
@@ -64,6 +59,10 @@ namespace MUnitTestAdapter
             ValidateArg.NotNull(frameworkHandle, nameof(frameworkHandle));
 
             ICollection<Guid> runningTests = tests.Select(t => t.Id).ToList();
+
+            if (!Client.Connected)
+                Client.Start();
+
             this.RunTestsInternal(runningTests, frameworkHandle);
         }
 
@@ -79,7 +78,19 @@ namespace MUnitTestAdapter
             ValidateArg.NotNull(runContext, nameof(runContext));
             ValidateArg.NotNull(frameworkHandle, nameof(frameworkHandle));
 
-            ICollection<Guid> runningTests = _client.DiscoverTests(sources).Select(t => t.TestID).ToList();
+            if (!Client.Connected)
+                Client.Start();
+
+            foreach (string source in sources)
+            {
+                if (!Client.CheckAssemblyHash(source, out byte[] _, out byte[] _))
+                {
+                    frameworkHandle.SendMessage(TestMessageLevel.Error, Errors.HashNotMatched);
+                    return;
+                }
+            }
+
+            ICollection<Guid> runningTests = Client.DiscoverTests(sources).Select(t => t.TestID).ToList();
             this.RunTestsInternal(runningTests, frameworkHandle);
         }
 
@@ -87,15 +98,25 @@ namespace MUnitTestAdapter
 
         private void RunTestsInternal(ICollection<Guid> tests, IFrameworkHandle frameworkHandle)
         {
+            if (RunSettingsProvider.OnTestSendAction != null)
+            {
+                RunSettingsProvider.OnTestSendAction.OnTestSend(Client);
+                Task.Delay(RunSettingsProvider.OnTestSendAction.ReconnectDelay).Wait();
+                if (!Client.Connected)
+                {
+                    Client.Start();
+                }
+            }
+
             _frameworkHandle = frameworkHandle;
             _testEndTrackList = new SynchronizedCollection<Guid>(tests);
             _testResultTrackList = new SynchronizedCollection<Guid>(tests);
 
-            _client.RecordTestStartEvent += this.RecordTestStartEventHandler;
-            _client.RecordTestEndEvent += this.RecordTestEndEventHandler;
-            _client.RecordTestResultEvent += this.RecordTestResultEventHandler;
+            Client.RecordTestStartEvent += this.RecordTestStartEventHandler;
+            Client.RecordTestEndEvent += this.RecordTestEndEventHandler;
+            Client.RecordTestResultEvent += this.RecordTestResultEventHandler;
 
-            _client.RunTests(tests, out int testRunID);
+            Client.RunTests(tests, out int testRunID);
             _testResultReceivedEvent.WaitOne();
         }
 
@@ -135,9 +156,9 @@ namespace MUnitTestAdapter
         {
             if (!_testEndTrackList.Any() && !_testResultTrackList.Any())
             {
-                _client.RecordTestStartEvent -= this.RecordTestStartEventHandler;
-                _client.RecordTestEndEvent -= this.RecordTestEndEventHandler;
-                _client.RecordTestResultEvent -= this.RecordTestResultEventHandler;
+                Client.RecordTestStartEvent -= this.RecordTestStartEventHandler;
+                Client.RecordTestEndEvent -= this.RecordTestEndEventHandler;
+                Client.RecordTestResultEvent -= this.RecordTestResultEventHandler;
 
                 _testResultReceivedEvent.Set();
             }

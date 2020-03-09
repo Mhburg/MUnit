@@ -11,8 +11,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using MUnit.Utilities;
 using MUnit.Framework;
+using MUnit.Utilities;
 
 namespace MUnit
 {

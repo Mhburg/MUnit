@@ -45,7 +45,6 @@ namespace MUnit.Transport
         /// </summary>
         /// <param name="testEngine"> Test engine supported by this transporter. </param>
         /// <param name="transporter"> Transporter used for IPC. </param>
-        /// <param name="logger"> Logger used by the engine. </param>
         public MUnitWire(ITestEngine testEngine, ITransporter transporter)
         {
             ThrowUtilities.NullArgument(testEngine, nameof(testEngine));
@@ -63,6 +62,11 @@ namespace MUnit.Transport
         {
             this.Dispose(false);
         }
+
+        /// <summary>
+        /// Gets a value indicating whether is connected.
+        /// </summary>
+        public bool Connected { get => _transporter.Connected; }
 
         /// <summary>
         /// Gets message queue from transporter.
