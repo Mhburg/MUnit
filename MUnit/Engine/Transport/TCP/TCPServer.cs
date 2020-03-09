@@ -24,10 +24,11 @@ namespace MUnit.Transport
         /// </summary>
         /// <param name="testEngine"> Test engine that this transporter supports. </param>
         /// <param name="logger"> Logger used by the engine. </param>
-        public TCPServer(ITestEngine testEngine, IMUnitLogger logger)
-            : base(testEngine, new TCPServerWorker(), logger)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Null checked in base type.")]
+        public TCPServer(ITestEngine testEngine)
+            : base(testEngine, new TCPServerWorker())
         {
-            new LogToFile().Initialize(logger, Path.Combine(Path.GetDirectoryName(PlatformService.GetServiceManager().ReflectionCache.GetExecAssemblyLocation()), "ServerLog.txt"));
+            new LogToFile().Initialize(testEngine.Logger, Path.Combine(Path.GetDirectoryName(PlatformService.GetServiceManager().ReflectionCache.GetExecAssemblyLocation()), "ServerLog.txt"));
         }
     }
 }

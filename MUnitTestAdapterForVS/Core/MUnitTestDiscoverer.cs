@@ -33,7 +33,7 @@ namespace MUnitTestAdapter
     public class MUnitTestDiscoverer : ITestDiscoverer
     {
         private IMessageLogger _vsLogger;
-        private ITestEngine _engine = new MUnitEngine(new MUnitLogger(MUF.MessageLevel.Debug));
+        private ITestEngine _engine = TypeResolver.Engine;
 
         /// <inheritdoc/>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Required to report all exceptions.")]
@@ -70,10 +70,6 @@ namespace MUnitTestAdapter
             {
                 _engine.Logger.RecordMessage(MUF.MessageLevel.Error, e.ToString());
             }
-        }
-
-        private void ReadSettings(IDiscoveryContext discoveryContext)
-        {
         }
 
         private void MessageEventHandler(object sender, MUF.MessageContext e)

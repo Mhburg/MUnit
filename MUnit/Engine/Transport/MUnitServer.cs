@@ -36,11 +36,10 @@ namespace MUnit.Transport
         /// </summary>
         /// <param name="testEngine"> Test engine supported by this server. </param>
         /// <param name="serverWorker"> Transporter used for IPC. </param>
-        /// <param name="logger"> Logger used by the engine. </param>
         /// <exception cref="ArgumentNullException">Throws if any argument is null. </exception>
         [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Null chekc is performed in base class.")]
-        public MUnitServer(ITestEngine testEngine, ITransporter serverWorker, IMUnitLogger logger)
-            : base(testEngine, serverWorker, logger)
+        public MUnitServer(ITestEngine testEngine, ITransporter serverWorker)
+            : base(testEngine, serverWorker)
         {
             _logger.TestResultsEvent += TestResultEventHandlerAsync;
             _logger.TestStartEvent += this.TestStartEventHandler;

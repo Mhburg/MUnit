@@ -5,8 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+
 using System.Linq;
 using System.Net;
+
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -32,8 +37,12 @@ namespace MUnitTestAdapter
         {
             ValidateArg.NotNull(reader, nameof(reader));
 
+#if DEBUG
+            DebugSetup(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "RunSettings.log.txt"), out TextWriterTraceListener listener);
+#endif
             while (reader.MoveToContent() != XmlNodeType.None)
             {
+                Debug.WriteLine("Name: {0}, Value : {1}", reader.Name, reader.Value);
                 switch (reader.Name)
                 {
                     case nameof(MUnitConfiguration.ServerIP):
@@ -54,6 +63,18 @@ namespace MUnitTestAdapter
                         break;
                 }
             }
+
+#if DEBUG
+            listener.Dispose();
+#endif
         }
+
+#if DEBUG
+        private void DebugSetup(string fileName, out TextWriterTraceListener listener)
+        {
+            listener = new TextWriterTraceListener(fileName);
+            Debug.Listeners.Add(listener);
+        }
+#endif
     }
 }

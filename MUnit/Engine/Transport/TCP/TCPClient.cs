@@ -20,15 +20,24 @@ namespace MUnit.Transport
         /// Initializes a new instance of the <see cref="TCPClient"/> class.
         /// </summary>
         /// <param name="testEngine"> Test engine that uses this client. </param>
-        /// <param name="logger"> Logger used by <paramref name="testEngine"/>. </param>
-        public TCPClient(ITestEngine testEngine, IMUnitLogger logger)
-            : base(testEngine, new TCPClientWorker(), logger)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Null checked in base type.")]
+        public TCPClient(ITestEngine testEngine)
+            : base(testEngine, new TCPClientWorker())
         {
             new LogToFile().Initialize(
-                logger,
+                testEngine.Logger,
                 Path.Combine(
                     Path.GetDirectoryName(
                         PlatformService.GetServiceManager().ReflectionCache.GetExecAssemblyLocation()), "ClientLog.txt"));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TCPClient"/> class.
+        /// </summary>
+        /// <remarks> For relfection use in test adpater. </remarks>
+        public TCPClient()
+            : this(new MUnitEngine(new MUnitLogger()))
+        {
         }
     }
 }

@@ -33,9 +33,8 @@ namespace MUnit.Transport
         /// </summary>
         /// <param name="testEngine"> Test engine supported by this transporter. </param>
         /// <param name="transporter"> Transporter used for IPC. </param>
-        /// <param name="logger"> Logger used by the engine. </param>
-        public MUnitClient(ITestEngine testEngine, ITransporter transporter, IMUnitLogger logger)
-            : base(testEngine, transporter, logger)
+        public MUnitClient(ITestEngine testEngine, ITransporter transporter)
+            : base(testEngine, transporter)
         {
         }
 

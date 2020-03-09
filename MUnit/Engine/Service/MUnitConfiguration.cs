@@ -42,14 +42,17 @@ namespace MUnit.Engine.Service
                 }
             }
 
+            string byteString = string.Join(
+                        ".",
+                        Dns.GetHostAddresses(
+                            Dns.GetHostName())[0]
+                            .GetAddressBytes()
+                            .Select(b => b.ToString(CultureInfo.InvariantCulture)).ToArray());
+
             if (!configuration.AppSettings.Settings.AllKeys.Contains(nameof(MUnitConfiguration.ServerIP)))
             {
                 configuration.AppSettings.Settings.Add(
-                    nameof(MUnitConfiguration.ServerIP),
-                    string.Join(
-                        ".",
-                        Dns.GetHostAddresses(
-                            Dns.GetHostName())[0].GetAddressBytes().Select(b => b.ToString(CultureInfo.InvariantCulture)).ToArray()));
+                    nameof(MUnitConfiguration.ServerIP), byteString);
             }
 
             configuration.Save(ConfigurationSaveMode.Minimal);
@@ -57,10 +60,14 @@ namespace MUnit.Engine.Service
             MUnitConfiguration.ServerPort = int.Parse(configuration.AppSettings.Settings[nameof(Settings.ServerPort)].Value, CultureInfo.InvariantCulture);
             MUnitConfiguration.SendTimeout = int.Parse(configuration.AppSettings.Settings[nameof(Settings.SendTimeout)].Value, CultureInfo.InvariantCulture);
             MUnitConfiguration.ReceiveTimeout = int.Parse(configuration.AppSettings.Settings[nameof(Settings.ReceiveTimeout)].Value, CultureInfo.InvariantCulture);
-            MUnitConfiguration.LastConnectedClientPort = int.Parse(configuration.AppSettings.Settings[nameof(Settings.LastConnectedClientPort)].Value, CultureInfo.InvariantCulture);
             MUnitConfiguration.ServerIP = new IPAddress(
                 configuration.AppSettings.Settings[nameof(MUnitConfiguration.ServerIP)]
                     .Value.Split('.').Select(s => byte.Parse(s, CultureInfo.InvariantCulture)).ToArray());
+            MUnitConfiguration.TransporterAssembly = configuration.AppSettings.Settings[nameof(Settings.TransporterAssembly)].Value;
+            MUnitConfiguration.TransporterType = configuration.AppSettings.Settings[nameof(Settings.TransporterType)].Value;
+            MUnitConfiguration.LoggerAssembly = configuration.AppSettings.Settings[nameof(Settings.LoggerAssembly)].Value;
+            MUnitConfiguration.LoggerType = configuration.AppSettings.Settings[nameof(Settings.LoggerType)].Value;
+            MUnitConfiguration.LoggerLevel = configuration.AppSettings.Settings[nameof(Settings.LoggerLevel)].Value;
         }
 
         /// <summary>
@@ -84,8 +91,28 @@ namespace MUnit.Engine.Service
         public static int ReceiveTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the remote port used for the last communication before host is shutdown.
+        /// Gets or sets assembly that contains the transporter.
         /// </summary>
-        public static int LastConnectedClientPort { get; set; }
+        public static string TransporterAssembly { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of transporter.
+        /// </summary>
+        public static string TransporterType { get; set; }
+
+        /// <summary>
+        /// Gets or sets assembly that contains a logger type.
+        /// </summary>
+        public static string LoggerAssembly { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of logger.
+        /// </summary>
+        public static string LoggerType { get; set; }
+
+        /// <summary>
+        /// Gets or sets severity level of message for which logger will records.
+        /// </summary>
+        public static string LoggerLevel { get; set; }
     }
 }

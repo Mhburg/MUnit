@@ -61,11 +61,29 @@ namespace MUnit.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -1.
+        ///   Looks up a localized string similar to 0MUnit.dll.
         /// </summary>
-        public static string LastConnectedClientPort {
+        public static string LoggerAssembly {
             get {
-                return ResourceManager.GetString("LastConnectedClientPort", resourceCulture);
+                return ResourceManager.GetString("LoggerAssembly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string LoggerLevel {
+            get {
+                return ResourceManager.GetString("LoggerLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MUnit.MUnitLogger.
+        /// </summary>
+        public static string LoggerType {
+            get {
+                return ResourceManager.GetString("LoggerType", resourceCulture);
             }
         }
         
@@ -102,6 +120,24 @@ namespace MUnit.Resources {
         public static string SettingFile {
             get {
                 return ResourceManager.GetString("SettingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0MUnit.dll.
+        /// </summary>
+        public static string TransporterAssembly {
+            get {
+                return ResourceManager.GetString("TransporterAssembly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MUnit.Transport.TCPClient.
+        /// </summary>
+        public static string TransporterType {
+            get {
+                return ResourceManager.GetString("TransporterType", resourceCulture);
             }
         }
     }

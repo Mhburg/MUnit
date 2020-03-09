@@ -5,8 +5,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
+using MUnit.Engine.Service;
 using MUnit.Transport;
 using MUnitTestAdapter.Resources;
 using MUnitTestAdapter.Utilities;
@@ -36,9 +39,7 @@ namespace MUnitTestAdapter
         /// </summary>
         public MUnitTestExecutor()
         {
-            this._client = (IMUnitClient)Activator.CreateInstance(
-                                    Properties.Settings.Default.AssemblyName,
-                                    Properties.Settings.Default.TestTransporterClass);
+            _client = TypeResolver.MUnitClient;
         }
 
         #region ITestExecutor Implementation

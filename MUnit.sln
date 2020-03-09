@@ -80,8 +80,8 @@ Global
 		{A8E959D9-38CC-48E4-89D3-8F4B3718C9B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8E959D9-38CC-48E4-89D3-8F4B3718C9B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8E959D9-38CC-48E4-89D3-8F4B3718C9B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8E959D9-38CC-48E4-89D3-8F4B3718C9B0}.UnitTest|Any CPU.ActiveCfg = Release|Any CPU
-		{A8E959D9-38CC-48E4-89D3-8F4B3718C9B0}.UnitTest|Any CPU.Build.0 = Release|Any CPU
+		{A8E959D9-38CC-48E4-89D3-8F4B3718C9B0}.UnitTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8E959D9-38CC-48E4-89D3-8F4B3718C9B0}.UnitTest|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

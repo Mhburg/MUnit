@@ -33,7 +33,7 @@ namespace MUnit.Test.Transport.TestMUnitServer
 
             engine = new MUnitEngine(new MUnitLogger(Framework.MessageLevel.Debug));
             engine.DiscoverTests(new string[] { Path.GetFileName(Assembly.GetExecutingAssembly().Location) });
-            _tcpClient = new TCPClient(engine, engine.Logger);
+            _tcpClient = new TCPClient(engine);
 
             ProcessActionCommandForServer = typeof(MUnitServer).GetMethod("ProcessActionCommand", BindingFlags.NonPublic | BindingFlags.Instance);
             _cancelToken = _cancelSource.Token;

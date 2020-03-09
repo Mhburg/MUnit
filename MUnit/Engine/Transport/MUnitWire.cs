@@ -46,13 +46,12 @@ namespace MUnit.Transport
         /// <param name="testEngine"> Test engine supported by this transporter. </param>
         /// <param name="transporter"> Transporter used for IPC. </param>
         /// <param name="logger"> Logger used by the engine. </param>
-        public MUnitWire(ITestEngine testEngine, ITransporter transporter, IMUnitLogger logger)
+        public MUnitWire(ITestEngine testEngine, ITransporter transporter)
         {
             ThrowUtilities.NullArgument(testEngine, nameof(testEngine));
             ThrowUtilities.NullArgument(transporter, nameof(transporter));
-            ThrowUtilities.NullArgument(logger, nameof(logger));
 
-            _logger = logger;
+            _logger = testEngine.Logger;
             _transporter = transporter;
             _testEngine = testEngine;
         }
