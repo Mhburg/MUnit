@@ -2,12 +2,25 @@
   <PropertyGroup>
     <TargetFramework>net35</TargetFramework>
     <AssemblyTitle>MUnitTest</AssemblyTitle>
-    <Product>MUnitTest</Product>
-    <Copyright>Copyright ©  2020</Copyright>
+    <Product>MUnit Test</Product>
+    <Copyright>Copyright ©  2020 Zizhen Li</Copyright>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <AssemblyName>0MUnit</AssemblyName>
     <RootNamespace>MUnit</RootNamespace>
     <Configurations>Debug;Release;UnitTest</Configurations>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Zizhen Li</Authors>
+    <Company>Zizhen Li</Company>
+    <Description>A test framework and engine of MUnit.</Description>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Mhburg/MUnit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Mhburg/MUnit</RepositoryUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>UnitTest Mod</PackageTags>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <Version>1.0.0.1</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -23,7 +36,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
@@ -97,5 +110,11 @@
   <ItemGroup>
     <Folder Include="Engine\Utilities\" />
     <Folder Include="Helper\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 </Project>

@@ -22,8 +22,8 @@ namespace MUnit.Transport
             : base(GetSocket(TCPConstants.MachineAddressFamily))
         {
             _remoteEndPoint = TCPConstants.ServerEndPoint;
-            _handler.SendTimeout = Engine.Service.MUnitConfiguration.SendTimeout;
-            _handler.ReceiveTimeout = Engine.Service.MUnitConfiguration.ReceiveTimeout;
+            _handler.SendTimeout = MUnitConfiguration.SendTimeout;
+            _handler.ReceiveTimeout = MUnitConfiguration.ReceiveTimeout;
         }
 
         /// <inheritdoc/>

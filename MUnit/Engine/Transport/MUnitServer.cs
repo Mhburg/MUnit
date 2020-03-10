@@ -1,4 +1,4 @@
-﻿// <copyright file="MUnitServer.cs" company="Zizhen Li">
+// <copyright file="MUnitServer.cs" company="Zizhen Li">
 // Copyright (c) Zizhen Li. All rights reserved.
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 // </copyright>
@@ -76,6 +76,7 @@ namespace MUnit.Transport
                             }
                             catch (Exception e)
                             {
+                                _isServerStarted = false;
                                 _serverException = e;
                                 _logger.RecordMessage(MessageLevel.Error, e.Message);
                             }

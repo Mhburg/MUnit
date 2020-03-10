@@ -16,15 +16,15 @@
     <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl />
     <RepositoryType>git</RepositoryType>
-    <PackageTags>UnitTest Mod TCP IPC</PackageTags>
-    <PackageReleaseNotes>* Add support for making remote procedure call before running tests.</PackageReleaseNotes>
+    <PackageTags>UnitTest Mod TCP IPC VS</PackageTags>
+    <PackageReleaseNotes>* Update default settings</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
     <AssemblyVersion>0.9.0.0</AssemblyVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
     <FileVersion>1.0.0.0</FileVersion>
-    <Version>1.0.0.5</Version>
+    <Version>1.0.0.7</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>portable</DebugType>

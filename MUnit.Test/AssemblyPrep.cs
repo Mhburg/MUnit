@@ -9,13 +9,12 @@ using MUnit.Engine;
 using MUnit.Utilities;
 
 using UTF = MUnit.Framework;
-using MS = Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MUnit.Test
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    [MS.TestClass]
+    [TestClass]
     public class AssemblyPrep
     {
         public static MUnitLogger Logger = new MUnitLogger(UTF.MessageLevel.Debug);
@@ -24,12 +23,12 @@ namespace MUnit.Test
         internal static ReflectionHelper ReflectionHelper = new ReflectionHelper(PlatformService.GetServiceManager().ReflectionCache);
         public static UTF.ITestCycleGraph MockTests = AssemblyPrep.TestEngine.DiscoverTests(new List<string>() { AssemblyPrep.Source });
 
-        [MS.AssemblyInitialize]
+        [AssemblyInitialize]
         public static void Initialize(TestContext testContext)
         {
         }
 
-        [MS.AssemblyCleanup]
+        [AssemblyCleanup]
         public static void Cleanup()
         {
             Logger.WriteToFile();

@@ -19,7 +19,7 @@ namespace MUnit.Test.Transport.TestMUnitClient
     [TestClass]
     public class TestFunctinality
     {
-        private static TCPServer _tcpServer = new TCPServer(AssemblyPrep.TestEngine, AssemblyPrep.Logger);
+        private static TCPServer _tcpServer = new TCPServer(AssemblyPrep.TestEngine);
         private static TCPClient _tcpClient = new TCPClient(AssemblyPrep.TestEngine);
         private static CancellationTokenSource _cancelSource = new CancellationTokenSource();
         private static CancellationToken _cancelToken;

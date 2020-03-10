@@ -30,14 +30,5 @@ namespace MUnit.Transport
                     Path.GetDirectoryName(
                         PlatformService.GetServiceManager().ReflectionCache.GetExecAssemblyLocation()), "ClientLog.txt"));
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TCPClient"/> class.
-        /// </summary>
-        /// <remarks> For relfection use in test adpater. </remarks>
-        public TCPClient()
-            : this(new MUnitEngine(new MUnitLogger()))
-        {
-        }
     }
 }
