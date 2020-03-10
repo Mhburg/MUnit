@@ -1,4 +1,4 @@
-﻿// <copyright file="MUnitTestDiscoverer.cs" company="Zizhen Li">
+// <copyright file="MUnitTestDiscoverer.cs" company="Zizhen Li">
 // Copyright (c) Zizhen Li. All rights reserved.
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 // </copyright>
@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MUnit;
 using MUnit.Engine;
+using MUnit.Transport;
 using MUnitTestAdapter.Utilities;
 
 using MUF = MUnit.Framework;
@@ -32,6 +33,7 @@ namespace MUnitTestAdapter
     [Category("managed")]
     public class MUnitTestDiscoverer : ITestDiscoverer
     {
+        private static readonly MUnitClient _client = TypeResolver.MUnitClient;
         private IMessageLogger _vsLogger;
         private ITestEngine _engine = TypeResolver.Engine;
 

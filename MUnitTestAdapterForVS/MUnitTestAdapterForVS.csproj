@@ -25,6 +25,9 @@
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
     <FileVersion>1.0.0.0</FileVersion>
     <Version>1.0.0.7</Version>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>MUnitTestAdapterForVS.pfx</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>portable</DebugType>

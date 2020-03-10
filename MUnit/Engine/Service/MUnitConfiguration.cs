@@ -34,6 +34,11 @@ namespace MUnit.Engine.Service
 
             Configuration configuration = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
             PopulateDefaultSettings(configuration);
+            AddDefaultSetting(configuration, nameof(MUnitConfiguration.ClientAssembly), typeof(TCPClient).Assembly.Location);
+            AddDefaultSetting(configuration, nameof(MUnitConfiguration.ClientType), typeof(TCPClient).FullName);
+            AddDefaultSetting(configuration, nameof(MUnitConfiguration.LoggerAssembly), typeof(MUnitLogger).Assembly.Location);
+            AddDefaultSetting(configuration, nameof(MUnitConfiguration.LoggerType), typeof(MUnitLogger).FullName);
+            configuration.Save(ConfigurationSaveMode.Modified);
 
             MUnitConfiguration.ServerPort = int.Parse(configuration.AppSettings.Settings[nameof(Settings.ServerPort)].Value, CultureInfo.InvariantCulture);
             MUnitConfiguration.SendTimeout = int.Parse(configuration.AppSettings.Settings[nameof(Settings.SendTimeout)].Value, CultureInfo.InvariantCulture);
@@ -42,12 +47,10 @@ namespace MUnit.Engine.Service
                 configuration.AppSettings.Settings[nameof(MUnitConfiguration.ServerIP)]
                     .Value.Split('.').Select(s => byte.Parse(s, CultureInfo.InvariantCulture)).ToArray());
             MUnitConfiguration.LoggerLevel = configuration.AppSettings.Settings[nameof(Settings.LoggerLevel)].Value;
-
-            AddDefaultSetting(configuration, nameof(MUnitConfiguration.ClientAssembly), typeof(TCPClient).Assembly.Location);
-            AddDefaultSetting(configuration, nameof(MUnitConfiguration.ClientType), typeof(TCPClient).FullName);
-            AddDefaultSetting(configuration, nameof(MUnitConfiguration.LoggerAssembly), typeof(MUnitLogger).Assembly.Location);
-            AddDefaultSetting(configuration, nameof(MUnitConfiguration.LoggerType), typeof(MUnitLogger).FullName);
-            configuration.Save(ConfigurationSaveMode.Modified);
+            MUnitConfiguration.ClientAssembly = typeof(TCPClient).Assembly.Location;
+            MUnitConfiguration.ClientType = typeof(TCPClient).FullName;
+            MUnitConfiguration.LoggerAssembly = typeof(MUnitLogger).Assembly.Location;
+            MUnitConfiguration.LoggerType = typeof(MUnitLogger).FullName;
         }
 
         /// <summary>
