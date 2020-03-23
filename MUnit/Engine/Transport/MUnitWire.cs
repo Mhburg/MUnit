@@ -1,4 +1,4 @@
-﻿// <copyright file="MUnitWire.cs" company="Zizhen Li">
+// <copyright file="MUnitWire.cs" company="Zizhen Li">
 // Copyright (c) Zizhen Li. All rights reserved.
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 // </copyright>
@@ -83,9 +83,17 @@ namespace MUnit.Transport
         /// <summary>
         /// Start the wire agent.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Required to catch all erros.")]
         public virtual void Start()
         {
-            _transporter.Start();
+            try
+            {
+                _transporter.Start();
+            }
+            catch (Exception e)
+            {
+                _logger.RecordMessage(MessageLevel.Error, e.ToString());
+            }
         }
 
         /// <summary>
@@ -95,6 +103,7 @@ namespace MUnit.Transport
         {
             if (_transporter.MessageQueue.TryDequeue(out WireMessage wireMessage))
             {
+                _logger.RecordMessage(MessageLevel.Trace, wireMessage.ToString());
                 this.ProcessMessagePacket(wireMessage);
             }
         }

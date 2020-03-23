@@ -1,4 +1,4 @@
-﻿// <copyright file="MUnitLogger.cs" company="Zizhen Li">
+// <copyright file="MUnitLogger.cs" company="Zizhen Li">
 // Copyright (c) Zizhen Li. All rights reserved.
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 // </copyright>
@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using MUnit.Engine;
 using MUnit.Engine.Resources;
+using MUnit.Engine.Service;
 using MUnit.Framework;
 
 namespace MUnit
@@ -81,7 +82,7 @@ namespace MUnit
         public void WriteToFile(string path = null)
         {
             if (path == null)
-                path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestLog.txt");
+                path = Path.Combine(Path.GetDirectoryName(MUnitConfiguration.ConfigPath), "TestLog.txt");
 
             File.WriteAllText(path, this.OutputLog(LogOrder.ByDateTime));
         }

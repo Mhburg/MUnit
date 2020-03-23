@@ -1,4 +1,4 @@
-﻿// <copyright file="MUnitTestExecutor.cs" company="Zizhen Li">
+// <copyright file="MUnitTestExecutor.cs" company="Zizhen Li">
 // Copyright (c) Zizhen Li. All rights reserved.
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 // </copyright>
@@ -63,6 +63,9 @@ namespace MUnitTestAdapter
             if (!Client.Connected)
                 Client.Start();
 
+            List<string> sources = tests.Select(t => t.Source).ToList();
+            sources.ForEach((source) => { bool result = Client.CheckAssemblyHash(source, out _, out _); });
+            Client.DiscoverTests(sources);
             this.RunTestsInternal(runningTests, frameworkHandle);
         }
 

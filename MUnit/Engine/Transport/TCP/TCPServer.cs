@@ -1,4 +1,4 @@
-﻿// <copyright file="TCPServer.cs" company="Zizhen Li">
+// <copyright file="TCPServer.cs" company="Zizhen Li">
 // Copyright (c) Zizhen Li. All rights reserved.
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 // </copyright>
@@ -6,7 +6,6 @@
 using System.IO;
 using MUnit.Engine;
 using MUnit.Engine.Service;
-using MUnit.Framework;
 
 namespace MUnit.Transport
 {
@@ -28,7 +27,8 @@ namespace MUnit.Transport
         public TCPServer(ITestEngine testEngine)
             : base(testEngine, new TCPServerWorker())
         {
-            new LogToFile().Initialize(testEngine.Logger, Path.Combine(Path.GetDirectoryName(PlatformService.GetServiceManager().ReflectionCache.GetExecAssemblyLocation()), "ServerLog.txt"));
+            if (!string.IsNullOrEmpty(MUnitConfiguration.ServerLog))
+                new LogToFile().Initialize(testEngine.Logger, MUnitConfiguration.ServerLog);
         }
     }
 }

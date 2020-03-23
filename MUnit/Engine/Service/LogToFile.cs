@@ -1,4 +1,4 @@
-﻿// <copyright file="LogToFile.cs" company="Zizhen Li">
+// <copyright file="LogToFile.cs" company="Zizhen Li">
 // Copyright (c) Zizhen Li. All rights reserved.
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 // </copyright>
@@ -35,7 +35,7 @@ namespace MUnit.Engine.Service
             try
             {
                 if (path == null)
-                    path = Path.Combine(Path.GetDirectoryName(PlatformService.GetServiceManager().ReflectionCache.GetExecAssemblyLocation()), "TestLog.txt");
+                    path = Path.Combine(Path.GetDirectoryName(MUnitConfiguration.ConfigPath), "TestLog.txt");
 
                 logger.WriteToFile(path);
                 _fileStream = new FileStream(path, FileMode.Append, FileAccess.Write, FileShare.None);

@@ -27,9 +27,20 @@ namespace MUnit.Engine.Service
     {
         static MUnitConfiguration()
         {
+            string configPath;
+            if (!string.IsNullOrEmpty(Assembly.GetExecutingAssembly().Location))
+            {
+                configPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Settings.SettingFile);
+            }
+            else
+            {
+                configPath = Path.Combine(Directory.GetCurrentDirectory(), Settings.SettingFile);
+            }
+
+            MUnitConfiguration.ConfigPath = configPath;
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap()
             {
-                ExeConfigFilename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Settings.SettingFile),
+                ExeConfigFilename = configPath,
             };
 
             Configuration configuration = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
@@ -51,7 +62,24 @@ namespace MUnit.Engine.Service
             MUnitConfiguration.ClientType = typeof(TCPClient).FullName;
             MUnitConfiguration.LoggerAssembly = typeof(MUnitLogger).Assembly.Location;
             MUnitConfiguration.LoggerType = typeof(MUnitLogger).FullName;
+
+            AddOptionalSettings(configuration);
         }
+
+        /// <summary>
+        /// Gets or sets path to config file.
+        /// </summary>
+        public static string ConfigPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the path to server log file.
+        /// </summary>
+        public static string ServerLog { get; set; }
+
+        /// <summary>
+        /// Gets working directories for engine to look for assemblies.
+        /// </summary>
+        public static List<string> WorkingDirectories { get; } = new List<string>();
 
         /// <summary>
         /// Gets or sets port the server listens to.
@@ -130,6 +158,20 @@ namespace MUnit.Engine.Service
             if (!configuration.AppSettings.Settings.AllKeys.Contains(key))
             {
                 configuration.AppSettings.Settings.Add(key, value);
+            }
+        }
+
+        private static void AddOptionalSettings(Configuration configuration)
+        {
+            if (configuration.AppSettings.Settings.AllKeys.Contains(nameof(MUnitConfiguration.WorkingDirectories)))
+            {
+                string[] workingDirectories = configuration.AppSettings.Settings[nameof(MUnitConfiguration.WorkingDirectories)]?.Value.Split(';');
+                MUnitConfiguration.WorkingDirectories.AddRange(workingDirectories);
+            }
+
+            if (configuration.AppSettings.Settings.AllKeys.Contains(nameof(MUnitConfiguration.ServerLog)))
+            {
+                MUnitConfiguration.ServerLog = configuration.AppSettings.Settings[nameof(MUnitConfiguration.ServerLog)].Value;
             }
         }
     }

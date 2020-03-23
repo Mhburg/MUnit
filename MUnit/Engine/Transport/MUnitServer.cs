@@ -251,7 +251,7 @@ namespace MUnit.Transport
         private void DiscoverTests(WireMessage message)
         {
             ITestCycleGraph tests = _testEngine.DiscoverTests(message.Entity as IEnumerable<string>);
-            this.Send(new WireMessage(WireMessageTypes.Telemetry, CommandType.DiscoverTests, tests.TestContextLookup.Values), message.SessionID);
+            this.Send(new WireMessage(WireMessageTypes.Telemetry, CommandType.DiscoverTests, tests.TestContextLookup.Values.ToList()), message.SessionID);
         }
 #if UnitTest
         /// <summary>

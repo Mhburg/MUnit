@@ -1,4 +1,4 @@
-﻿// <copyright file="TestMethodContext.cs" company="Zizhen Li">
+// <copyright file="TestMethodContext.cs" company="Zizhen Li">
 // Copyright (c) Zizhen Li. All rights reserved.
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 // </copyright>
@@ -74,8 +74,10 @@ namespace MUnit.Framework.Base
         [DataMember]
         public Type DeclaringType { get; set; }
 
+        [IgnoreDataMember]
         internal ITestCycle ParentCycle { get; set; }
 
+        [IgnoreDataMember]
         internal IDataSource DataSource { get; set; }
 
         [IgnoreDataMember]

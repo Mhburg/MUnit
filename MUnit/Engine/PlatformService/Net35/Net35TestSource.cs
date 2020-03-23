@@ -1,4 +1,4 @@
-﻿// <copyright file="Net35TestSource.cs" company="Zizhen Li">
+// <copyright file="Net35TestSource.cs" company="Zizhen Li">
 // Copyright (c) Zizhen Li. All rights reserved.
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 // </copyright>
@@ -6,8 +6,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.IO;
 using System.Reflection;
+using MUnit.Engine.Service;
 using MUnit.Framework;
 using MUnit.Resources;
 using MUnit.Utilities;
@@ -38,7 +40,7 @@ namespace MUnit.Engine.Net35
                         logger.RecordMessage(MessageLevel.Error, Errors.InvalidExtension);
                         continue;
                     }
-                    else if (!IsLoaded(source, out Assembly assembly))
+                    else if (!TryLoaded(source, out Assembly assembly, logger))
                     {
                         logger.RecordMessage(MessageLevel.Error, Errors.FileNotLoaded);
                         continue;
@@ -66,21 +68,34 @@ namespace MUnit.Engine.Net35
                    || filename.EndsWith(".exe.", false, CultureInfo.CurrentCulture);
         }
 
-        private bool IsLoaded(string source, out Assembly target)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Required to catch all exception.")]
+        private bool TryLoaded(string source, out Assembly target, IMUnitLogger logger)
         {
-            Assembly assembly = Assembly.Load(new AssemblyName(Path.GetFileNameWithoutExtension(source)));
-
-            foreach (Assembly assembly1 in AppDomain.CurrentDomain.GetAssemblies())
+            target = Assembly.LoadFrom(source);
+            List<AssemblyName> loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().Select(asm => asm.GetName()).ToList();
+            foreach (AssemblyName assemblyName in target.GetReferencedAssemblies())
             {
-                if (assembly1.FullName == assembly.FullName)
+                if (!loadedAssemblies.Contains(assemblyName))
                 {
-                    target = assembly1;
-                    return true;
+                    try
+                    {
+                        foreach (string directory in MUnitConfiguration.WorkingDirectories)
+                        {
+                            string path = Path.Combine(directory, assemblyName.Name) + ".dll";
+                            Assembly.LoadFrom(path);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        logger.RecordMessage(MessageLevel.Information, e.ToString());
+                    }
                 }
             }
 
-            target = null;
-            return false;
+            if (target != null)
+                return true;
+            else
+                return false;
         }
     }
 }
