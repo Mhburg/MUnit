@@ -341,3 +341,9 @@ healthchecksdb
 
 # Migration Backup
 **/MigrationBackup
+
+# Key
+*.key
+
+# Deploy
+Nuget.Publish.bat
